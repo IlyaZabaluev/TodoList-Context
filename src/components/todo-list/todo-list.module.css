@@ -1,0 +1,32 @@
+.list {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #fff;
+	border-radius: 10px;
+	width: 475px;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+.task {
+	color: rgba(108, 122, 113, 0.986);
+	margin: 0px 10px 10px 10px;
+	font-weight: bold;
+}
+
+.task:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+.btn {
+	color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+	margin: 3px;
+	padding: 5px;
+	border-radius: 7px;
+	background-color: rgb(8, 44, 153);
+}

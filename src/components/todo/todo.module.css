@@ -1,0 +1,29 @@
+.title {
+	padding: 10px 0px;
+}
+
+.title h1 {
+	font-size: 50px;
+	font-weight: bolder;
+}
+
+.formInput {
+	padding-bottom: 5px;
+}
+
+.formNewTask {
+	border-radius: 10px;
+	height: 26px;
+	width: 76%;
+}
+
+.btnForm {
+	justify-content: flex-end;
+	color: rgb(8, 44, 153);
+	font-size: 16px;
+	font-weight: 600;
+	margin: 3px;
+	padding: 5px;
+	border-radius: 7px;
+	background-color: #fff;
+}
