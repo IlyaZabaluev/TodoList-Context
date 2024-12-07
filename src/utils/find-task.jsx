@@ -1,1 +1,1 @@
-export const findTask = (comments, todoId) => comments.find(({ id }) => id === todoId);
+export const findTask = (tasks, todoId) => tasks.find(({ id }) => id === todoId);

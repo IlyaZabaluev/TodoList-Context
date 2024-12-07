@@ -1,11 +1,28 @@
 import styles from './todo.module.css';
-import { useChangeButtonStatus } from '../../hooks';
-import { useContext } from 'react';
-import { TodoContext } from '../../state-management';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	selectorIsCreating,
+	selectorNewTask,
+	selectorUpdateListFlag,
+} from '../../selectors';
+import { ACTION_TYPE, createTasksAsync } from '../../actions';
 
 export const Todo = () => {
-	const { status } = useChangeButtonStatus();
-	const { newTask, setNewTask, requestAddTask } = useContext(TodoContext);
+	const newTask = useSelector(selectorNewTask);
+	const updateListFlag = useSelector(selectorUpdateListFlag);
+	const isCreating = useSelector(selectorIsCreating);
+	const dispatch = useDispatch();
+
+	const entryTasks = (e) => {
+		dispatch({
+			type: ACTION_TYPE.SET_NEW_TASKS,
+			payload: { newTask: e.target.value },
+		});
+	};
+
+	const requestAddTask = () => {
+		dispatch(createTasksAsync(newTask, updateListFlag));
+	};
 
 	return (
 		<div>
@@ -14,14 +31,14 @@ export const Todo = () => {
 			</div>
 			<div className={styles.formInput}>
 				<input
-					placeholder="Enter tasks..."
+					placeholder="Enter task..."
 					value={newTask}
-					onChange={(e) => setNewTask(e.target.value)}
+					onChange={entryTasks}
 					className={styles.formNewTask}
 					type="text"
 				/>
 				<button
-					disabled={status.isCreating}
+					disabled={isCreating}
 					className={styles.btnForm}
 					onClick={requestAddTask}
 				>

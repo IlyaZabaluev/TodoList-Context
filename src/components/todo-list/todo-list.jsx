@@ -1,12 +1,42 @@
 import styles from './todo-list.module.css';
-import { useChangeButtonStatus } from '../../hooks';
-import { useContext } from 'react';
-import { TodoContext } from '../../state-management';
+import { updateTaskAsync, deleteTaskAsync, ACTION_TYPE } from '../../actions';
+import {
+	selectorIsUpdating,
+	selectorIsDeleting,
+	selectorUpdateListFlag,
+	selectorTasks,
+} from '../../selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUpTask } from '../../utils';
 
 export const TodoList = ({ id, title, isEditing }) => {
-	const { status } = useChangeButtonStatus();
-	const { requestUpdateTask, requestDeleteTask, onTaskEdit, newTitleChange } =
-		useContext(TodoContext);
+	const tasks = useSelector(selectorTasks);
+	const updateListFlag = useSelector(selectorUpdateListFlag);
+	const isUpdating = useSelector(selectorIsUpdating);
+	const isDeleting = useSelector(selectorIsDeleting);
+	const dispatch = useDispatch();
+
+	const onTaskEdit = (id) => {
+		dispatch({
+			type: ACTION_TYPE.SET_TASKS,
+			payload: setUpTask(tasks, { id, isEditing: true }),
+		});
+	};
+
+	const newTitleChange = (id, newTitle) => {
+		dispatch({
+			type: ACTION_TYPE.SET_TASKS,
+			payload: setUpTask(tasks, { id, title: newTitle }),
+		});
+	};
+
+	const requestUpdateTask = () => {
+		dispatch(updateTaskAsync(id, title, updateListFlag));
+	};
+
+	const requestDeleteTask = () => {
+		dispatch(deleteTaskAsync(id, updateListFlag));
+	};
 
 	return (
 		<div>
@@ -26,7 +56,7 @@ export const TodoList = ({ id, title, isEditing }) => {
 				<div className={styles.buttons}>
 					{isEditing ? (
 						<button
-							disabled={status.isUpdating}
+							disabled={isUpdating}
 							className={styles.btn}
 							onClick={() => requestUpdateTask(id)}
 						>
@@ -34,7 +64,7 @@ export const TodoList = ({ id, title, isEditing }) => {
 						</button>
 					) : (
 						<button
-							disabled={status.isDeleting}
+							disabled={isDeleting}
 							className={styles.btn}
 							onClick={() => requestDeleteTask(id)}
 						>

@@ -1,5 +1,5 @@
-export const setUpTask = (comments, newTaskDate) =>
-	comments.map((task) =>
+export const setUpTask = (tasks, newTaskDate) =>
+	tasks.map((task) =>
 		task.id === newTaskDate.id
 			? {
 					...task,
